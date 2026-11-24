@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101918">
+    <meta name="description" content="CICLO helps teams find external security gaps and measure recovery readiness across verified assets.">
+    <title>CICLO — Security, with proof</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="CICLO home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-name">CICLO<span class="brand-dot">.</span></span>
+        </a>
+        <div class="topbar-right">
+          <span class="environment-pill"><span class="status-dot"></span><span data-i18n="pilot">PILOT ENVIRONMENT</span></span>
+          <button id="language-toggle" class="language-toggle" type="button" aria-label="Switch language">EN</button>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero section-wrap">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="eyebrow">CONTINUOUS SECURITY, WITH PROOF</span></p>
+            <h1 data-i18n="heroTitle">Find the gaps.<br><em>Prove recovery.</em></h1>
+            <p class="hero-lede" data-i18n="heroLede">A practical first layer for exposure checks and recovery readiness. Every scan is limited to a domain you verify.</p>
+            <div class="hero-actions">
+              <button class="button button-primary" type="button" data-go="scan"><span data-i18n="startScan">Start a domain check</span><span aria-hidden="true">↗</span></button>
+              <button class="button button-quiet" type="button" data-go="recovery"><span data-i18n="planRecovery">Plan recovery</span><span aria-hidden="true">↓</span></button>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="orb orb-large"></div><div class="orb orb-small"></div>
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="hero-core"><div class="core-ring"></div><span class="core-check">✓</span></div>
+            <div class="orbit-label label-top"><span class="signal-dot"></span>EXPOSURE</div>
+            <div class="orbit-label label-right"><span class="signal-dot signal-orange"></span>RESPONSE</div>
+            <div class="orbit-label label-bottom"><span class="signal-dot signal-blue"></span>RECOVERY</div>
+            <div class="hero-stamp"><span data-i18n="scopeStamp">VERIFIED SCOPE</span><strong>01</strong></div>
+          </div>
+        </section>
+
+        <section class="section-wrap workspace-section">
+          <div class="workspace-head">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="workspaceEyebrow">WORKSPACE</span></p>
+              <h2 data-i18n="workspaceTitle">Security readiness</h2>
+            </div>
+            <div class="workspace-meta"><span class="meta-label" data-i18n="localStorageLabel">LOCAL WORKSPACE</span><span class="meta-value" data-i18n="localStorageValue">Reports stay in this browser</span></div>
+          </div>
+
+          <div class="overview-grid">
+            <article class="metric-card metric-featured">
+              <div class="metric-top"><span data-i18n="metricScope">VERIFIED SCOPES</span><span class="metric-icon icon-scope">◎</span></div>
+              <div class="metric-value" id="scope-count">0</div>
+              <div class="metric-foot"><span class="metric-muted" data-i18n="metricScopeFoot">Domains checked with proof of control</span></div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-top"><span data-i18n="metricFindings">OPEN FINDINGS</span><span class="metric-icon icon-findings">⌁</span></div>
+              <div class="metric-value" id="finding-count">—</div>
+              <div class="metric-foot"><span class="metric-muted" id="last-scan-label" data-i18n="noScanYet">No scan yet</span></div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-top"><span data-i18n="metricRecovery">RECOVERY PLAN</span><span class="metric-icon icon-recovery">↻</span></div>
+              <div class="metric-value metric-word" id="recovery-status" data-i18n="notStarted">Not started</div>
+              <div class="metric-foot"><span class="metric-muted" id="service-count-label" data-i18n="noServices">No critical services listed</span></div>
+            </article>
+          </div>
+
+          <div class="tabbar" role="tablist" aria-label="Security workspace">
+            <button class="tab-button active" id="tab-scan" role="tab" aria-selected="true" aria-controls="panel-scan" data-panel="scan"><span class="tab-index">01</span><span data-i18n="tabScan">External exposure</span></button>
+            <button class="tab-button" id="tab-recovery" role="tab" aria-selected="false" aria-controls="panel-recovery" data-panel="recovery"><span class="tab-index">02</span><span data-i18n="tabRecovery">Recovery readiness</span></button>
+            <button class="tab-button" id="tab-scope" role="tab" aria-selected="false" aria-controls="panel-scope" data-panel="scope"><span class="tab-index">03</span><span data-i18n="tabScope">Scope & limits</span></button>
+          </div>
+
+          <section class="workspace-panel active" id="panel-scan" role="tabpanel" aria-labelledby="tab-scan">
+            <div class="panel-intro">
+              <div><p class="panel-kicker" data-i18n="scanKicker">READ-ONLY · VERIFIED DOMAIN</p><h3 data-i18n="scanTitle">Check the public edge</h3></div>
+              <p data-i18n="scanIntro">DNS mail policy, TLS certificate and selected HTTPS security headers. No exploit attempts.</p>
+            </div>
+            <div class="scan-layout">
+              <div class="scan-card">
+                <label for="domain-input" data-i18n="domainLabel">Domain you own or are authorized to assess</label>
+                <div class="input-row"><span class="input-prefix">https://</span><input id="domain-input" type="text" inputmode="url" autocomplete="url" placeholder="your-company.com" maxlength="253" aria-describedby="domain-help"></div>
+                <p class="field-help" id="domain-help" data-i18n="domainHelp">Enter a hostname only. One verified hostname per scan.</p>
+                <button id="generate-proof" class="button button-secondary full-button" type="button"><span data-i18n="generateProof">Generate DNS challenge</span><span aria-hidden="true">＋</span></button>
+                <div id="proof-box" class="proof-box hidden">
+                  <div class="proof-heading"><span class="step-number">1</span><div><strong data-i18n="proofTitle">Add this DNS TXT record</strong><span data-i18n="proofSub">The server checks whether this token is published on the hostname.</span></div></div>
+                  <div class="copy-field"><span class="copy-label">HOST</span><code id="proof-host">—</code><button class="copy-button" type="button" data-copy="proof-host" data-i18n="copy">Copy</button></div>
+                  <div class="copy-field"><span class="copy-label">TXT</span><code id="proof-value">—</code><button class="copy-button" type="button" data-copy="proof-value" data-i18n="copy">Copy</button></div>
+                  <label class="authorization-check"><input id="authorized-confirmation" type="checkbox"><span data-i18n="authorization">I confirm I own this domain or have authorization to assess it.</span></label>
+                  <button id="run-scan" class="button button-primary full-button" type="button"><span data-i18n="verifyScan">Verify and scan</span><span aria-hidden="true">→</span></button>
+                  <p class="proof-note" data-i18n="proofNote">DNS records are public. This challenge limits scope but does not authenticate the person calling the scanner.</p>
+                </div>
+                <div id="scan-status" class="scan-status hidden" role="status" aria-live="polite"></div>
+              </div>
+              <div class="scan-explainer">
+                <div class="explainer-icon">⌖</div>
+                <h4 data-i18n="whyProof">Why verify first?</h4>
+                <p data-i18n="whyProofBody">The scanner requires the hostname to publish the token. DNS is public, so this does not authenticate the person calling the API or establish legal ownership.</p>
+                <div class="scan-check-list">
+                  <div><span class="check-mark">✓</span><span data-i18n="checkDns">SPF, DMARC and mail routing</span></div>
+                  <div><span class="check-mark">✓</span><span data-i18n="checkTls">Public TLS certificate</span></div>
+                  <div><span class="check-mark">✓</span><span data-i18n="checkHeaders">HTTPS response headers</span></div>
+                </div>
+                <div class="scope-lock"><span>⌑</span><span data-i18n="scopeLock">One verified hostname · read-only · no exploit payloads</span></div>
+              </div>
+            </div>
+            <div id="results" class="results hidden" aria-live="polite"></div>
+          </section>
+
+          <section class="workspace-panel" id="panel-recovery" role="tabpanel" aria-labelledby="tab-recovery" hidden>
+            <div class="panel-intro">
+              <div><p class="panel-kicker" data-i18n="recoveryKicker">PREPARE · MEASURE · VERIFY</p><h3 data-i18n="recoveryTitle">Map the way back</h3></div>
+              <p data-i18n="recoveryIntro">Set recovery targets for critical services. Saving this plan does not run or verify a restore.</p>
+            </div>
+            <div class="recovery-layout">
+              <div class="recovery-card">
+                <div class="form-section-head"><div><span class="step-number">1</span><strong data-i18n="criticalServices">Critical services</strong></div><span class="small-cap" data-i18n="maxFive">MAX 5</span></div>
+                <div id="services-list" class="services-list"></div>
+                <button id="add-service" class="add-service" type="button"><span>＋</span><span data-i18n="addService">Add a critical service</span></button>
+                <div class="form-divider"></div>
+                <div class="target-grid">
+                  <div class="field-group"><label for="rto-input" data-i18n="rtoLabel">Recovery time target (RTO)</label><div class="unit-input"><input id="rto-input" type="number" min="1" max="720" placeholder="8"><span data-i18n="hours">hours</span></div><span class="field-help" data-i18n="rtoHelp">How long can this service be unavailable?</span></div>
+                  <div class="field-group"><label for="rpo-input" data-i18n="rpoLabel">Data loss target (RPO)</label><div class="unit-input"><input id="rpo-input" type="number" min="0" max="10080" placeholder="60"><span data-i18n="minutes">minutes</span></div><span class="field-help" data-i18n="rpoHelp">How much recent data could you lose?</span></div>
+                </div>
+                <div class="form-divider"></div>
+                <div class="target-grid restore-grid">
+                  <div class="field-group"><label for="restore-date" data-i18n="restoreDateLabel">Last successful restore test</label><input id="restore-date" class="date-input" type="date"><span class="field-help" data-i18n="restoreDateHelp">Enter a date only if a restore actually completed.</span></div>
+                  <div class="field-group"><label for="restore-note" data-i18n="restoreNoteLabel">What was restored?</label><input id="restore-note" class="text-input" type="text" maxlength="120" placeholder="e.g. billing database"><span class="field-help" data-i18n="restoreNoteHelp">A short description for your own records.</span></div>
+                </div>
+                <button id="save-plan" class="button button-primary save-plan" type="button"><span data-i18n="savePlan">Save recovery plan</span><span aria-hidden="true">✓</span></button>
+                <div id="plan-status" class="inline-status" role="status" aria-live="polite"></div>
+              </div>
+              <aside class="recovery-proof-card">
+                <p class="panel-kicker" data-i18n="proofOfRecovery">RECOVERY EVIDENCE</p>
+                <div class="proof-score" id="restore-age">—<span data-i18n="days">days</span></div>
+                <p class="proof-score-label" data-i18n="restoreAgeLabel">since the last recorded restore test</p>
+                <div class="recovery-meter"><span id="recovery-meter-fill"></span></div>
+                <div id="recovery-checklist" class="recovery-checklist"></div>
+                <div class="evidence-warning"><span class="warning-icon">!</span><span data-i18n="recoveryWarning">A saved plan is not proof of recovery. Proof requires a real restore, integrity checks and measured time.</span></div>
+              </aside>
+            </div>
+          </section>
+
+          <section class="workspace-panel" id="panel-scope" role="tabpanel" aria-labelledby="tab-scope" hidden>
+            <div class="panel-intro">
+              <div><p class="panel-kicker" data-i18n="scopeKicker">MVP SCOPE</p><h3 data-i18n="scopeTitle">What this release can prove</h3></div>
+              <p data-i18n="scopeIntro">The current build is a working external posture check and recovery planner. It is not an endpoint detection or incident response service yet.</p>
+            </div>
+            <div class="scope-grid">
+              <article class="scope-card scope-in"><span class="scope-number">01</span><div><h4 data-i18n="includedTitle">Included now</h4><ul><li data-i18n="included1">Verified public hostname</li><li data-i18n="included2">SPF, DMARC, MX and public IPv4 checks</li><li data-i18n="included3">TLS certificate and selected HTTPS headers</li><li data-i18n="included4">Recovery targets and restore-test record</li><li data-i18n="included5">Browser-local report export</li></ul></div></article>
+              <article class="scope-card scope-next"><span class="scope-number">02</span><div><h4 data-i18n="nextTitle">Next integrations</h4><ul><li data-i18n="next1">Nuclei for scoped vulnerability templates</li><li data-i18n="next2">Wazuh or equivalent endpoint telemetry</li><li data-i18n="next3">Cloud and identity connectors</li><li data-i18n="next4">Partner-led containment and clean restore workflow</li></ul></div></article>
+              <article class="scope-card scope-out"><span class="scope-number">03</span><div><h4 data-i18n="excludedTitle">Not claimed</h4><ul><li data-i18n="excluded1">Detect every AI-assisted attack</li><li data-i18n="excluded2">Find every unknown / zero-day vulnerability</li><li data-i18n="excluded3">Guarantee 100% recovery</li><li data-i18n="excluded4">Scan assets without ownership proof</li></ul></div></article>
+            </div>
+            <div class="license-note"><span class="license-icon">i</span><p data-i18n="licenseNote">Open-source engines can accelerate later phases, but their code, vulnerability feeds and templates have separate license terms. CICLO does not bundle or redistribute them in this MVP.</p></div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="footer section-wrap"><div class="footer-brand">CICLO<span class="brand-dot">.</span></div><p data-i18n="footerScope">Pilot release · External scope only · No guarantee of security</p><div class="footer-actions"><button id="export-report" class="footer-link" type="button" data-i18n="exportReport">Export report</button><button id="print-report" class="footer-link" type="button" data-i18n="printReport">Print / PDF</button></div></footer>
+    </div>
+  </body>
+</html>

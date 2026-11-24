@@ -1,0 +1,14 @@
+{
+  "name": "ciclo-security-pilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A verified-scope external posture scanner and recovery-readiness planner.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node --check server.js && node --check api/scan.js && node --check app.js"
+  }
+}
