@@ -1,9 +1,9 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
-const scanHandler = require('./api/scan');
+const scanHandler = require('../api/scan');
 
-const ROOT = __dirname;
+const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 const FILES = {
   '/': ['index.html', 'text/html; charset=utf-8'],
   '/index.html': ['index.html', 'text/html; charset=utf-8'],
@@ -33,7 +33,7 @@ const server = http.createServer((req, res) => {
 
   res.setHeader('Content-Type', file[1]);
   res.setHeader('Cache-Control', pathname === '/' ? 'no-store' : 'public, max-age=300');
-  fs.createReadStream(path.join(ROOT, file[0]))
+  fs.createReadStream(path.join(PUBLIC_DIR, file[0]))
     .on('error', () => {
       if (!res.headersSent) res.statusCode = 500;
       res.end('Could not read application file.');

@@ -67,7 +67,7 @@ function normalizeDomain(input) {
 
 function isPublicIpv4(address) {
   if (isIP(address) !== 4) return false;
-  const [a, b, c] = address.split('.').map(Number);
+  const [a, b, c, d] = address.split('.').map(Number);
   if (a === 0 || a === 10 || a === 127 || a >= 224) return false;
   if (a === 100 && b >= 64 && b <= 127) return false;
   if (a === 169 && b === 254) return false;

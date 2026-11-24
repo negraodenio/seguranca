@@ -7,8 +7,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js",
-    "build": "node --check server.js && node --check api/scan.js && node --check app.js"
+    "dev": "node scripts/dev-server.js",
+    "start": "node scripts/dev-server.js",
+    "build": "node --check scripts/dev-server.js && node --check api/scan.js && node --check public/app.js"
   }
 }
